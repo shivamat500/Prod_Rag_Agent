@@ -1,0 +1,16 @@
+/.env
+/Test
+/Test.py
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Generated at build time on Render (or by `python ingest.py`)
+/faiss_index/
+/models_cache/
+
+# Per-visitor chat history
+/memory_store/

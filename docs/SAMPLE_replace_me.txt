@@ -1,0 +1,9 @@
+SAMPLE DOCUMENT - DELETE THIS FILE AND PUT YOUR OWN PDFs / TXT FILES IN THIS FOLDER.
+
+It exists only so the first Render build has something to index. The facts below
+are invented placeholders, not real data.
+
+Sample Clinical Trial T001 (placeholder)
+Trial T001 was a fictional two-arm study used to demonstrate this assistant.
+The placeholder efficacy rate reported for T001 was 78 percent.
+The placeholder study enrolled 120 participants over 12 months.

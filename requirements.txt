@@ -1,0 +1,49 @@
+# ============================================================================
+#  RAG Agent - runtime dependencies (Python 3.12)
+# ============================================================================
+#  Install:  python -m venv .venv && source .venv/bin/activate
+#            pip install -r requirements.txt
+#
+#  What was wrong with the original file: it pinned langchain-community==0.3.24
+#  and langchain-text-splitters==0.3.8 next to langchain-core>=1.1 / langgraph>=1.
+#  Those two old releases require langchain-core<1.0, so pip could never satisfy
+#  both. They now track the 1.x line, and `langchain` itself (never imported by
+#  this code) and `langchain-huggingface` (needs PyTorch) are gone.
+# ----------------------------------------------------------------------------
+
+# --- LangChain 1.x stack ------------------------------------------------------
+langchain-core>=1.1.0,<2
+langchain-community>=0.4.0
+langchain-text-splitters>=1.0.0,<2
+langgraph>=1.0,<2
+
+# --- LLM provider: Google Gemini (one GEMINI_API_KEY from Google AI Studio) ---
+# 4.x needs langchain-core>=1.1, which is where the core floor above comes from.
+langchain-google-genai>=4.0.0,<5
+
+# --- Typed settings -----------------------------------------------------------
+pydantic>=2.11,<3
+pydantic-settings>=2.10,<3
+python-dotenv>=1.0
+
+# --- Local embeddings (ONNX, no PyTorch, no API key) + vector store -----------
+fastembed>=0.4.2,<0.9
+faiss-cpu>=1.7.4
+
+# --- Document loading ---------------------------------------------------------
+pypdf>=5.4.0,<7
+
+# --- Web-search fallback (optional; disabled when TAVILY_API_KEY is empty) -----
+tavily-python>=0.5.4,<1
+
+# --- Web layer (app.py). main.py (the CLI) does not need these ----------------
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+
+# ============================================================================
+#  OPTIONAL extras (not installed by default)
+# ============================================================================
+#  Langfuse tracing - set LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY as well:
+#      langfuse>=3,<4
+#  (The original langfuse==2.60.4 imports langchain.callbacks, which no longer
+#  exists in LangChain 1.x, so v3 is required.)

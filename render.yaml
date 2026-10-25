@@ -1,0 +1,28 @@
+# Render Blueprint: New + > Blueprint, pick this repo.
+services:
+  - type: web
+    name: gemini-rag-agent
+    runtime: python
+    plan: free
+    region: singapore          # closest to India; change if you prefer
+    # Install deps, then build the FAISS index from ./docs (this also downloads
+    # the embedding model into ./models_cache so startup does not have to).
+    buildCommand: pip install -r requirements.txt && python ingest.py ./docs
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: GEMINI_API_KEY
+        sync: false            # you will be asked for it in the dashboard
+      - key: TAVILY_API_KEY
+        sync: false            # optional: leave blank to disable web fallback
+      - key: GEMINI_MODEL
+        value: gemini-3.8-flash
+      - key: OFFLINE_MODE
+        value: "false"
+      - key: ENABLE_SELF_CRITIQUE
+        value: "true"          # set "false" to halve Gemini calls per question
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "20"
